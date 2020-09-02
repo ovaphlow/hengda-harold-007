@@ -1,0 +1,16 @@
+{
+  "install": ["bulma/css/bulma.css"],
+  "extends": "@snowpack/app-scripts-react",
+  "plugins": [],
+  "devOptions": {
+    "bundle": true,
+    "open": "none"
+  },
+  "buildOptions": {
+    "baseUrl": ".",
+    "clean": true
+  },
+  "proxy": {
+    "/api": "http://127.0.0.1:8421"
+  }
+}

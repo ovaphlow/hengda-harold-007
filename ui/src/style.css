@@ -1,0 +1,19 @@
+body {
+  height: 100vh;
+  display: grid;
+}
+
+.wrap {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.page-title {
+  background-color: #eaebec;
+  padding: 1rem 1rem 0;
+}
+
+.footer {
+  padding: 1rem 1rem 1rem;
+}
