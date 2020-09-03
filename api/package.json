@@ -1,0 +1,15 @@
+{
+  "name": "hengda-harold-ledger07-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "ovaphlow@live.com",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/router": "^9.4.0",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.1.1"
+  }
+}

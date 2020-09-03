@@ -11,7 +11,7 @@ export default function Footer() {
 
           <div className="level-item">
             【产品经理】 李文阁 <FontAwesomeIcon icon={faPhone} fixedWidth />
-            18645043300)
+            18645043300
           </div>
 
           <div className="level-item">返回顶部</div>

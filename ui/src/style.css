@@ -10,10 +10,12 @@ body {
 }
 
 .page-title {
-  background-color: #eaebec;
+  margin-bottom: 1rem;
+  background-color: #F0F8FF;
   padding: 1rem 1rem 0;
 }
 
 .footer {
+  margin-top: 2rem;
   padding: 1rem 1rem 1rem;
 }

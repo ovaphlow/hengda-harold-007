@@ -6,18 +6,18 @@ import reducer from './reducer';
 import useAuth from './useAuth';
 
 const initial_detail = {
-  date: dayjs().format('YYYY-MM-DD'),
-  train: '',
-  rail: '',
-  operator: '',
-  leader: '',
-  qc: '',
-  date_2: dayjs().format('YYYY-MM-DD'),
-  train_2: '',
-  rail_2: '',
-  operator_2: '',
-  leader_2: '',
-  qc_2: '',
+  date1: dayjs().format('YYYY-MM-DD'),
+  train1: '',
+  rail1: '',
+  operator1: '',
+  leader1: '',
+  qc1: '',
+  date2: dayjs().format('YYYY-MM-DD'),
+  train2: '',
+  rail2: '',
+  operator2: '',
+  leader2: '',
+  qc2: '',
 };
 
 export default function Detail() {
@@ -72,26 +72,28 @@ export default function Detail() {
     }
     window
       .fetch(`/api/ledger/07/${id}`)
-      .then((response) => {
-        if (response.status === 200) return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        Object.keys(data.content).forEach((iter) => {
-          if (iter === 'date' || iter === 'date_2') {
-            dispatch({
-              type: iter,
-              payload: dayjs(data.content[iter]).format('YYYY-MM-DD'),
-            });
-          } else if (
-            (iter === 'qc' && !data.content[iter]) ||
-            (iter === 'qc_2' && !data.content[iter])
-          ) {
-            dispatch({ type: 'qc', payload: auth.name });
-            dispatch({ type: 'qc_2', payload: auth.name });
-          } else {
-            dispatch({ type: iter, payload: data.content[iter] });
-          }
-        });
+        dispatch({ type: 'date1', payload: dayjs(data.date1).format('YYYY-MM-DD') });
+        dispatch({ type: 'train1', payload: data.paishui.train });
+        dispatch({ type: 'rail1', payload: data.paishui.rail });
+        dispatch({ type: 'operator1', payload: data.paishui.operator });
+        dispatch({ type: 'leader1', payload: data.paishui.leader });
+        if (!data.paishui.qc && !!option) {
+          dispatch({ type: 'qc1', payload: auth.name });
+        } else {
+          dispatch({ type: 'qc1', payload: data.paishui.qc });
+        }
+        dispatch({ type: 'date2', payload: dayjs(data.date2).format('YYYY-MM-DD') });
+        dispatch({ type: 'train2', payload: data.huifu.train });
+        dispatch({ type: 'rail2', payload: data.huifu.rail });
+        dispatch({ type: 'operator2', payload: data.huifu.operator });
+        dispatch({ type: 'leader2', payload: data.huifu.leader });
+        if (!!data.paishui.qc && !data.huifu.qc && !!option) {
+          dispatch({ type: 'qc2', payload: auth.name });
+        } else {
+          dispatch({ type: 'qc2', payload: data.huifu.qc });
+        }
       });
   }, []);
 
@@ -131,11 +133,11 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="date"
-                    value={detail.date}
+                    value={detail.date1}
                     disabled={!!option}
                     className="input"
                     onChange={(event) =>
-                      dispatch({ type: 'date', payload: event.target.value })
+                      dispatch({ type: 'date1', payload: event.target.value })
                     }
                   />
                 </div>
@@ -148,11 +150,11 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="text"
-                    value={detail.train}
+                    value={detail.train1}
                     disabled={!!option}
                     className="input"
                     onChange={(event) =>
-                      dispatch({ type: 'train', payload: event.target.value })
+                      dispatch({ type: 'train1', payload: event.target.value })
                     }
                   />
                 </div>
@@ -165,11 +167,11 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="text"
-                    value={detail.rail}
+                    value={detail.rail1}
                     disabled={!!option}
                     className="input"
                     onChange={(event) =>
-                      dispatch({ type: 'rail', payload: event.target.value })
+                      dispatch({ type: 'rail1', payload: event.target.value })
                     }
                   />
                 </div>
@@ -182,12 +184,12 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="text"
-                    value={detail.operator}
+                    value={detail.operator1}
                     disabled={!!option}
                     className="input"
                     onChange={(event) =>
                       dispatch({
-                        type: 'operator',
+                        type: 'operator1',
                         payload: event.target.value,
                       })
                     }
@@ -202,11 +204,11 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="text"
-                    value={detail.leader}
+                    value={detail.leader1}
                     disabled={!!option}
                     className="input"
                     onChange={(event) =>
-                      dispatch({ type: 'leader', payload: event.target.value })
+                      dispatch({ type: 'leader1', payload: event.target.value })
                     }
                   />
                 </div>
@@ -219,11 +221,11 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="text"
-                    value={detail.qc}
+                    value={detail.qc1}
                     disabled={!option}
                     className="input"
                     onChange={(event) =>
-                      dispatch({ type: 'qc', payload: event.target.value })
+                      dispatch({ type: 'qc1', payload: event.target.value })
                     }
                   />
                 </div>
@@ -240,11 +242,11 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="date"
-                    value={detail.date_2}
+                    value={detail.date2}
                     disabled={!!option}
                     className="input"
                     onChange={(event) =>
-                      dispatch({ type: 'date_2', payload: event.target.value })
+                      dispatch({ type: 'date2', payload: event.target.value })
                     }
                   />
                 </div>
@@ -257,11 +259,11 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="text"
-                    value={detail.train_2}
+                    value={detail.train2}
                     disabled={!!option}
                     className="input"
                     onChange={(event) =>
-                      dispatch({ type: 'train_2', payload: event.target.value })
+                      dispatch({ type: 'train2', payload: event.target.value })
                     }
                   />
                 </div>
@@ -274,11 +276,11 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="text"
-                    value={detail.rail_2}
+                    value={detail.rail2}
                     disabled={!!option}
                     className="input"
                     onChange={(event) =>
-                      dispatch({ type: 'rail_2', payload: event.target.value })
+                      dispatch({ type: 'rail2', payload: event.target.value })
                     }
                   />
                 </div>
@@ -291,12 +293,12 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="text"
-                    value={detail.operator_2}
+                    value={detail.operator2}
                     disabled={!!option}
                     className="input"
                     onChange={(event) =>
                       dispatch({
-                        type: 'operator_2',
+                        type: 'operator2',
                         payload: event.target.value,
                       })
                     }
@@ -311,12 +313,12 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="text"
-                    value={detail.leader_2}
+                    value={detail.leader2}
                     disabled={!!option}
                     className="input"
                     onChange={(event) =>
                       dispatch({
-                        type: 'leader_2',
+                        type: 'leader2',
                         payload: event.target.value,
                       })
                     }
@@ -331,12 +333,12 @@ export default function Detail() {
                 <div className="control">
                   <input
                     type="text"
-                    value={detail.qc_2}
+                    value={detail.qc2}
                     disabled={!option}
                     className="input"
                     onChange={(event) =>
                       dispatch({
-                        type: 'qc_2',
+                        type: 'qc2',
                         payload: event.target.value,
                       })
                     }

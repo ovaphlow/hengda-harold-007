@@ -6,8 +6,8 @@ import { faPlus, faEdit, faSearch } from '@fortawesome/free-solid-svg-icons';
 import reducer from './reducer';
 
 const initial_filter = {
-  date_begin: dayjs().format('YYYY-MM-01'),
-  date_end: dayjs().format('YYYY-MM-DD'),
+  date1: dayjs().format('YYYY-MM-01'),
+  date2: dayjs().format('YYYY-MM-DD'),
 };
 
 export default function Filter() {
@@ -18,8 +18,8 @@ export default function Filter() {
   const handleFilter = () => {
     setList([]);
     window
-      .fetch(`/api/ledger/07/filter/`, {
-        method: 'POST',
+      .fetch(`/api/ledger/07/`, {
+        method: 'PUT',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(filter),
       })
@@ -59,12 +59,14 @@ export default function Filter() {
     setList([]);
     if (!category) {
       window
-        .fetch(`/api/ledger/07/`)
+        .fetch(`/api/ledger/07/`, {
+          method: 'PUT',
+        })
         .then((response) => {
           if (response.status === 200) return response.json();
         })
         .then((data) => {
-          setList(data.content);
+          setList(data);
         });
     } else {
       window
@@ -102,10 +104,7 @@ export default function Filter() {
 
         <div className="level">
           <div className="level-left">
-            <a
-              href="#/新增"
-              className="is-size-5"
-            >
+            <a href="#/新增" className="is-size-5">
               <FontAwesomeIcon icon={faPlus} fixedWidth />
               新增
             </a>
@@ -137,11 +136,11 @@ export default function Filter() {
                 <div className="control">
                   <input
                     type="date"
-                    value={filter.date_begin}
+                    value={filter.date1}
                     className="input"
                     onChange={(event) =>
                       dispatch({
-                        type: 'date_begin',
+                        type: 'date1',
                         payload: event.target.value,
                       })
                     }
@@ -156,11 +155,11 @@ export default function Filter() {
                 <div className="control">
                   <input
                     type="date"
-                    value={filter.date_end}
+                    value={filter.date2}
                     className="input"
                     onChange={(event) =>
                       dispatch({
-                        type: 'date_end',
+                        type: 'date2',
                         payload: event.target.value,
                       })
                     }
@@ -220,43 +219,37 @@ export default function Filter() {
                 {list.map((iter) => (
                   <tr key={iter.id}>
                     <td className="has-text-right">
-                      <a
-                        className="has-text-info is-pulled-left"
-                        href={`#/07.动车组防冻排水及恢复作业记录表/${iter.id}`}
-                      >
-                        <FontAwesomeIcon icon={faEdit} fixedWidth />
-                      </a>
+                      {!iter.paishui.qc && !iter.huifu.qc && (
+                        <a
+                          className="has-text-info is-pulled-left"
+                          href={`#/${iter.id}`}
+                        >
+                          <FontAwesomeIcon icon={faEdit} fixedWidth />
+                        </a>
+                      )}
 
                       {iter.id}
                     </td>
-                    <td>{dayjs(iter.date).format('YYYY-MM-DD')}</td>
-                    <td>{iter.train}</td>
-                    <td>{iter.rail}</td>
-                    <td>{iter.operator}</td>
-                    <td>{iter.leader}</td>
+                    <td>{dayjs(iter.date1).format('YYYY-MM-DD')}</td>
+                    <td>{iter.paishui.train}</td>
+                    <td>{iter.paishui.rail}</td>
+                    <td>{iter.paishui.operator}</td>
+                    <td>{iter.paishui.leader}</td>
                     <td>
-                      {!!iter.qc && iter.qc}
-                      {!iter.qc && (
-                        <a
-                          href={`#/07.动车组防冻排水及恢复作业记录表/${iter.id}?option=review`}
-                        >
-                          质检审核
-                        </a>
+                      {!!iter.paishui.qc && iter.paishui.qc}
+                      {!iter.paishui.qc && (
+                        <a href={`#/${iter.id}?option=review`}>质检审核</a>
                       )}
                     </td>
-                    <td>{dayjs(iter.date_2).format('YYYY-MM-DD')}</td>
-                    <td>{iter.train_2}</td>
-                    <td>{iter.rail_2}</td>
-                    <td>{iter.operator_2}</td>
-                    <td>{iter.leader_2}</td>
+                    <td>{dayjs(iter.huifu.date).format('YYYY-MM-DD')}</td>
+                    <td>{iter.huifu.train}</td>
+                    <td>{iter.huifu.rail}</td>
+                    <td>{iter.huifu.operator}</td>
+                    <td>{iter.huifu.leader}</td>
                     <td>
-                      {!!iter.qc_2 && iter.qc_2}
-                      {!iter.qc && (
-                        <a
-                          href={`#/07.动车组防冻排水及恢复作业记录表/${iter.id}?option=review`}
-                        >
-                          质检审核
-                        </a>
+                      {!!iter.huifu.qc && iter.huifu.qc}
+                      {!iter.huifu.qc && (
+                        <a href={`#/${iter.id}?option=review`}>质检审核</a>
                       )}
                     </td>
                   </tr>
