@@ -18,17 +18,14 @@ export default function Filter() {
   const handleFilter = () => {
     setList([]);
     window
-      .fetch(`/api/ledger/07/`, {
+      .fetch(`/api/ledger/07/?option=filter`, {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(filter),
       })
-      .then((response) => {
-        if (response.status === 200) return response.json();
-        else window.alert('服务器错误');
-      })
+      .then((response) => response.json())
       .then((data) => {
-        setList(data.content);
+        setList(data);
       });
   };
 

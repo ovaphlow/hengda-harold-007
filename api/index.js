@@ -66,6 +66,20 @@ router.put('/:id', async (ctx) => {
   }
 });
 
+router.delete('/:id', async (ctx) => {
+  const cnx = await postgres.connect();
+  try {
+    const sql = `
+    delete from harold.ledger07 where id = $1
+    `;
+    await cnx.query(sql, [parseInt(ctx.params.id, 10)]);
+    ctx.response.status = 200;
+  } catch (err) {
+    logger.error(`--> ${ctx.request.method} ${ctx.request.url} ${err}`);
+    ctx.response.status = 500;
+  }
+});
+
 router.put('/', async (ctx) => {
   const cnx = await postgres.connect();
   try {
