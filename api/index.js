@@ -72,7 +72,7 @@ router.put('/', async (ctx) => {
     let sql = `
     select * from harold.ledger07
     `;
-    let result;
+    let result = [];
     const option = ctx.request.query.option || '';
     switch (option) {
       case '':
@@ -92,8 +92,16 @@ router.put('/', async (ctx) => {
           ctx.request.body.date2,
         ]);
         break;
+      case 'review':
+        sql += `
+        where paishui->'qc' = '""'
+            or huifu->'qc' = '""'
+        limit 100
+        `;
+        result = await cnx.query(sql);
+        break;
       default:
-        ctx.response.body = [];
+        ctx.response.body = result;
     }
     ctx.response.body = result.rows;
   } catch (err) {

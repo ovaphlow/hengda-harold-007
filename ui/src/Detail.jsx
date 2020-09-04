@@ -24,7 +24,7 @@ export default function Detail() {
   const [detail, dispatch] = React.useReducer(reducer, initial_detail);
   const { id } = useParams();
   const option = new URLSearchParams(useLocation().search).get('option');
-  const auth = useAuth();
+  const auth = useAuth() || {};
 
   const handleSave = () => {
     window

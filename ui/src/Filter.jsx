@@ -68,14 +68,14 @@ export default function Filter() {
         .then((data) => {
           setList(data);
         });
-    } else {
+    } else if (category === '质检审核') {
       window
-        .fetch(`/api/ledger/07/review/`)
-        .then((response) => {
-          if (response.status === 200) return response.json();
+        .fetch(`/api/ledger/07/?option=review`, {
+          method: 'PUT',
         })
+        .then((response) => response.json())
         .then((data) => {
-          setList(data.content);
+          setList(data);
         });
     }
   }, [category]);
@@ -248,7 +248,7 @@ export default function Filter() {
                     <td>{iter.huifu.leader}</td>
                     <td>
                       {!!iter.huifu.qc && iter.huifu.qc}
-                      {!iter.huifu.qc && (
+                      {!!iter.paishui.qc && !iter.huifu.qc && (
                         <a href={`#/${iter.id}?option=review`}>质检审核</a>
                       )}
                     </td>
