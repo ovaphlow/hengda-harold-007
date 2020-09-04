@@ -36,9 +36,7 @@ export default function Filter() {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(list),
       })
-      .then((response) => {
-        return response.blob();
-      })
+      .then((response) => response.blob())
       .then((data) => {
         const blob = new Blob([data]);
         const fileName =
