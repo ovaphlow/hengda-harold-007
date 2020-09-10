@@ -28,7 +28,7 @@ export default function Detail() {
 
   const handleSave = () => {
     window
-      .fetch(`/api/ledger/07/`, {
+      .fetch(`/api/harold-007/`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(detail),
@@ -41,7 +41,7 @@ export default function Detail() {
 
   const handleUpdate = () => {
     window
-      .fetch(`/api/ledger/07/${id}`, {
+      .fetch(`/api/harold-007/${id}`, {
         method: 'PUT',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(detail),
@@ -55,7 +55,7 @@ export default function Detail() {
   const handleRemove = () => {
     if (!window.confirm('确定要删除当前数据？')) return;
     window
-      .fetch(`/api/ledger/07/${id}`, {
+      .fetch(`/api/harold-007/${id}`, {
         method: 'DELETE',
       })
       .then((response) => {
@@ -71,7 +71,7 @@ export default function Detail() {
       window.history.go(-1);
     }
     window
-      .fetch(`/api/ledger/07/${id}`)
+      .fetch(`/api/harold-007/${id}`)
       .then((response) => response.json())
       .then((data) => {
         dispatch({ type: 'date1', payload: dayjs(data.date1).format('YYYY-MM-DD') });
@@ -102,7 +102,7 @@ export default function Detail() {
       <section className="page-title">
         <div className="level">
           <div className="level-left">
-            <h1 className="title">07.动车组防冻排水及恢复作业记录表</h1>
+            <h1 className="title">007.动车组防冻排水及恢复作业记录表</h1>
           </div>
           <div className="level-right">
             <nav className="breadcrumb" aria-label="breadcrumbs">
@@ -111,7 +111,7 @@ export default function Detail() {
                   <a href="/">首页</a>
                 </li>
                 <li>
-                  <a href="#/">07.动车组防冻排水及恢复作业记录表</a>
+                  <a href="#/">007.动车组防冻排水及恢复作业记录表</a>
                 </li>
                 <li className="is-active">
                   <a aria-current="page">{!!id ? id : '新增'}</a>

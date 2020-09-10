@@ -6,7 +6,6 @@ import 'bulma/css/bulma.css';
 import './style.css';
 
 const Navbar = React.lazy(() => import('./Navbar'));
-const SideMenu = React.lazy(() => import('./SideMenu'));
 const Footer = React.lazy(() => import('./Footer'));
 const Filter = React.lazy(() => import('./Filter'));
 const Detail = React.lazy(() => import('./Detail'));
