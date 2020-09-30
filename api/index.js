@@ -2,8 +2,8 @@ const Koa = require('koa');
 const Router = require('@koa/router');
 const bodyParser = require('koa-bodyparser');
 
-const logger = require('../../hengda-harold/dispatcher/util/bunyan');
-const postgres = require('../../hengda-harold/dispatcher/util/postgres');
+const logger = require('../../hengda-pitchfork/dispatcher/util/bunyan');
+const postgres = require('../../hengda-pitchfork/dispatcher/util/postgres');
 
 const app = new Koa();
 
